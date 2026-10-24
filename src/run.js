@@ -314,6 +314,10 @@ export function resolveEvent(run, choice, metaBonuses = {}) {
     const pool = Object.keys(RELICS).filter((r) => !run.relics.includes(r));
     if (pool.length) { const id = run.rng.pick(pool); run.relics.push(id); res.notes.push(`found ${RELICS[id].name}`); }
   }
+  if (o.potion) {
+    if (run.potions.length < 4) { const id = run.rng.pick(Object.keys(POTIONS)); run.potions.push(id); res.notes.push(`got ${POTIONS[id].name}`); }
+    else res.notes.push('no room for potions');
+  }
   if (o.upgradeRandom) {
     const cands = run.abilities.filter((a) => a.level < 3);
     if (cands.length) { const a = run.rng.pick(cands); a.level++; res.notes.push(`${ABILITIES[a.id].name} upgraded`); }

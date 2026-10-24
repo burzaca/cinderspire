@@ -85,6 +85,16 @@ export const RELICS = {
   war_drums: { name: 'War Drums', icon: '🥁', desc: '+0.15 attack speed', stats: { atkSpeed: 0.15 } },
   gold_purse: { name: 'Gold Purse', icon: '👛', desc: '+30% gold from fights', stats: { goldBonus: 0.3 } },
   second_ember: { name: 'Second Ember', icon: '🕏', desc: 'Once per fight, rise again at 35% HP', stats: { revives: 1 } },
+  overclock_gears: { name: 'Overclock Gears', icon: '⚙️', desc: 'Abilities recharge 15% faster', stats: { cdr: 0.15 } },
+  ember_font: { name: 'Font of Ember', icon: '⛲', desc: '+25 max mana', stats: { manaMax: 25 } },
+  blood_moon: { name: 'Blood Moon Shard', icon: '🌑', desc: '+5% lifesteal, +1 attack', stats: { lifesteal: 0.05, atk: 1 } },
+  hunters_mark: { name: "Hunter's Mark", icon: '🎯', desc: '+8% crit, +0.05 attack speed', stats: { crit: 0.08, atkSpeed: 0.05 } },
+  ossuary_plate: { name: 'Ossuary Plate', icon: '🦴', desc: '+3 armor, +10 max HP', stats: { armor: 3, maxHp: 10 } },
+  philosophers_coal: { name: "Philosopher's Coal", icon: '♟️', desc: '+15% burn and +15% curse damage', stats: { burnAmp: 0.15, curseAmp: 0.15 } },
+  greed_idol: { name: 'Greed Idol', icon: '🗿', desc: '+50% gold from fights, +3 luck', stats: { goldBonus: 0.5, luck: 3 } },
+  steady_hand: { name: 'Steady Hand', icon: '✋', desc: '+2 mana regen, +0.05 attack speed', stats: { manaRegen: 2, atkSpeed: 0.05 } },
+  kindled_blood: { name: 'Kindled Blood', icon: '🩸', desc: 'Regenerate 2 HP per second', stats: { regen: 2 } },
+  deep_pocket: { name: 'Deep Pocket', icon: '🕳️', desc: '+40 starting mana', stats: { startMana: 40 } },
 };
 
 // Enemy abilities reuse the ability effect schema (targets flip automatically).
@@ -228,6 +238,51 @@ export const EVENTS = [
       { label: 'Bank the coals (+50 gold)', outcome: { gold: 50 } },
     ],
   },
+  {
+    id: 'coin_door', title: 'The Coin Door', glyph: '🚪',
+    text: 'A door with no handle. A slot at its base, worn smooth by braver hands than yours.',
+    choices: [
+      { label: 'Feed it 100 gold (gain a relic)', outcome: { gold: -100, relic: true } },
+      { label: 'Kick the door (risk 40 gold for 90)', outcome: { gamble: { stake: 40, win: 90, p: 0.5 } } },
+      { label: 'Walk on', outcome: {} },
+    ],
+  },
+  {
+    id: 'ash_nursery', title: 'The Ash Nursery', glyph: '🌱',
+    text: 'Pale seedlings grow from cinder-soil. They lean toward your warmth.',
+    choices: [
+      { label: 'Water them with your blood (heal 50, lose 10 max HP)', outcome: { hp: 50, stat: { maxHp: -10 } } },
+      { label: 'Take a seedling (+1 HP regen this run)', outcome: { stat: { regen: 1 } } },
+      { label: 'Tend the soil (+25 gold)', outcome: { gold: 25 } },
+    ],
+  },
+  {
+    id: 'mirror_knight', title: 'The Mirror Knight', glyph: '🪞',
+    text: 'A knight of still water copies your stance exactly. It waits for you to blink.',
+    choices: [
+      { label: 'Spar with it (gain an ability, lose 15 HP)', outcome: { ability: true, hp: -15 } },
+      { label: 'Trade places (swap: +20 max HP, −2 attack)', outcome: { stat: { maxHp: 20, atk: -2 } } },
+      { label: 'Bow and retreat', outcome: {} },
+    ],
+  },
+  {
+    id: 'smuggler_rat', title: 'Pocket-Sized Smuggler', glyph: '🐀',
+    text: 'An ash rat with a saddlebag full of stolen thimbles. It proposes a business arrangement.',
+    choices: [
+      { label: 'Buy its potion (40 gold, gain a potion)', outcome: { gold: -40, potion: true } },
+      { label: 'Hire it (+3 luck this run)', outcome: { stat: { luck: 3 } } },
+      { label: 'It scurries off', outcome: {} },
+    ],
+  },
+  {
+    id: 'cinder_choir', title: 'Rehearsal of the Pale', glyph: '🎻',
+    text: 'Before the Choir performs, it warms up. The sound almost feels like kindness.',
+    choices: [
+      { label: 'Stay for the encore (heal full, lose 10 max HP)', outcome: { hp: 999, stat: { maxHp: -10 } } },
+      { label: 'Steal a rosin cake (+0.05 attack speed)', outcome: { stat: { atkSpeed: 0.05 } } },
+      { label: 'Leave before the crescendo', outcome: {} },
+    ],
+  },
 ];
 
 // Level-up boons offered mid-run (the incremental inside-a-run growth).
@@ -240,6 +295,13 @@ export const BOONS = [
   { id: 'heal', name: 'Emberbroth', desc: 'Heal 40% of max HP', healPct: 0.4 },
   { id: 'crit', name: 'Find the Gap', desc: '+5% crit chance', stat: { crit: 0.05 } },
   { id: 'ls', name: 'Bloodthirst', desc: '+4% lifesteal', stat: { lifesteal: 0.04 } },
+  { id: 'thorns', name: 'Bristle', desc: '+2 thorns', stat: { thorns: 2 } },
+  { id: 'burnamp', name: 'Tinder Soul', desc: '+12% burn damage', stat: { burnAmp: 0.12 } },
+  { id: 'curseamp', name: 'Hexmark', desc: '+12% curse damage', stat: { curseAmp: 0.12 } },
+  { id: 'cdr', name: 'Quick Hands', desc: '+6% cooldown reduction', stat: { cdr: 0.06 } },
+  { id: 'mana_max', name: 'Wider Veins', desc: '+15 max mana', stat: { manaMax: 15 } },
+  { id: 'regen', name: 'Slow Mending', desc: '+1 HP regen per second', stat: { regen: 1 } },
+  { id: 'crit_mult', name: 'Cruel Cuts', desc: '+25% critical damage', stat: { critMult: 0.25 } },
 ];
 
 // Meta progression — the Forge. Costs are in embers.
