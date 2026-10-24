@@ -557,6 +557,13 @@ function onCombatEnd() {
         const owned = new Set(S.run.relics);
         const pool = S.run.rng.shuffle(Object.keys(RELICS).filter((r) => !owned.has(r)));
         S.lastSpoils = pool.slice(0, 3).map((id) => ({ kind: 'relic', id }));
+        if (baseActOf(S.run) === 3 && !S.celebrated) {
+          S.celebrated = true;
+          modal('The tower bows to you.', [
+            el('p', null, 'Act 3 has fallen. Below it, the tower repeats itself — every loop, foes gain +25% HP and +18% attack, and embers scale with the depth.'),
+            el('p', null, 'There is no top floor. There is only your Forge.'),
+          ], [['Keep climbing', null, 'primary']]);
+        }
       }
       saveRun();
       if (S.run.pendingBoons && S.run.pendingBoons.length) renderLevelUp();
