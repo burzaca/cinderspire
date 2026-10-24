@@ -23,6 +23,13 @@ export const CLASSES = {
     start: ['grave_bite', 'hex', 'wither'],
     unlockCost: 250,
   },
+  quickthistle: {
+    name: 'Quickthistle', glyph: '🗡️', tag: 'Blink. Cut. Blink again.',
+    desc: 'Shadow-dancer. Fragile and fast — crits, speed, and finishing wounded prey.',
+    stats: { maxHp: 85, atk: 9, atkSpeed: 1.55, armor: 0, manaRegen: 12, crit: 0.25 },
+    start: ['quick_cut', 'twin_fang', 'flinch'],
+    unlockCost: 400,
+  },
 };
 
 // power = damage as multiple of attack. Costs are mana; cooldowns seconds.
@@ -53,6 +60,16 @@ export const ABILITIES = {
   soul_sip: { name: 'Soul Sip', cls: 'gravetongue', cost: 30, cooldown: 6, power: 1.8, heal: 14, rarity: 'uncommon', icon: '🥤', flavor: 'Slurp, respectfully.' },
   leech_ward: { name: 'Leech Ward', cls: 'gravetongue', cost: 25, cooldown: 9, shield: 18, heal: 10, rarity: 'uncommon', icon: '🩸', flavor: 'Borrowed skin, returned later.' },
   doom_bloom: { name: 'Doom Bloom', cls: 'gravetongue', cost: 45, cooldown: 12, curse: 14, rarity: 'rare', icon: '☠️', flavor: 'It was always going to end this way.' },
+
+  // ---- Quickthistle ----
+  quick_cut: { name: 'Quick Cut', cls: 'quickthistle', cost: 12, cooldown: 0, power: 1.7, rarity: 'common', icon: '🍃', flavor: 'A cut before they hear you.' },
+  twin_fang: { name: 'Twin Fang', cls: 'quickthistle', cost: 22, cooldown: 3, power: 1.0, hits: 2, rarity: 'common', icon: '🌾', flavor: 'Two petals, same stem.' },
+  flinch: { name: 'Flinch', cls: 'quickthistle', cost: 16, cooldown: 6, weaken: 2, slow: 1, rarity: 'uncommon', icon: '🐝', flavor: 'Sting first, think later.' },
+  thistle_dash: { name: 'Thistle Dash', cls: 'quickthistle', cost: 18, cooldown: 8, buff: 2, rarity: 'uncommon', icon: '🍂', flavor: 'Outrun your own shadow.' },
+  bloodpetal: { name: 'Bloodpetal', cls: 'quickthistle', cost: 24, cooldown: 9, heal: 20, rarity: 'uncommon', icon: '🌸', flavor: 'Petals drink red.' },
+  adrenaline: { name: 'Adrenaline', cls: 'quickthistle', cost: 26, cooldown: 12, cdr: 0.25, rarity: 'rare', icon: '🦗', flavor: 'The hum speeds everything.' },
+  burr_shot: { name: 'Burr Shot', cls: 'quickthistle', cost: 28, cooldown: 8, power: 1.0, aoe: true, weaken: 1, rarity: 'rare', icon: '🌰', flavor: 'Every burr finds a lap.' },
+  thistle_finish: { name: 'Thistle Finish', cls: 'quickthistle', cost: 32, cooldown: 10, power: 1.2, executePower: 4.6, executeBelow: 0.35, rarity: 'rare', icon: '🥀', flavor: 'The last petal falls.' },
 
   // ---- common pool (any class can find these) ----
   swift_cut: { name: 'Swift Cut', cls: null, cost: 15, cooldown: 2, power: 1.2, rarity: 'common', icon: '🗡️', flavor: 'Quick, rude, effective.' },
