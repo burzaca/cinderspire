@@ -42,15 +42,25 @@ Built in ~10 hours of autonomous overnight development (2026-10-24/25). Zero dep
 
 ## Balance, measured not vibes
 
-`scripts/simulate.js` plays full runs with the same autopilot the 🤖 button uses. Current numbers (60 runs/class, fresh Forge):
+`scripts/simulate.js` plays full runs with the same autopilot the 🤖 button uses, plus a spoils/shop policy that scores ability value like a decent player. Two tiers, 60 runs/class:
 
-| class | avg floor | act 1 clears |
-|---|---|---|
-| Emberwright | 10.6 | 52% |
-| Ironsoul | 11.1 | 53% |
-| Gravetongue | 11.7 | 57% (deepest observed: floor 61) |
+**Fresh Forge (new player):**
 
-The autopilot is a mediocre player — humans do better. Tuning is done by changing data and re-running the sim, never by feel.
+| class | avg floor | act 1 clears | act 3 clears |
+|---|---|---|---|
+| Emberwright | 11.6 | 67% | 0% |
+| Ironsoul | 12.1 | 60% | 0% |
+| Gravetongue | 12.1 | 65% | 2% (deepest observed: floor 60) |
+
+**Seasoned Forge (a spread of permanent upgrades):**
+
+| class | avg floor | act 1 clears | act 3 clears |
+|---|---|---|---|
+| Emberwright | 15.2 | 98% | 0% |
+| Ironsoul | 25.6 | 100% | 15% |
+| Gravetongue | 32.7 | 98% | 45% (deepest observed: floor 61) |
+
+That delta *is* the design: the Forge converts act-1 losses into act-3 clears. The autopilot is a mediocre player — humans do better. Known imbalance: Emberwright scales worst past act 2 (its burn engine falls off against high-HP bosses) — a deliberate future tuning lever. Tuning is done by changing data and re-running the sim, never by feel.
 
 ## Run it
 
