@@ -776,6 +776,11 @@ function endRun(died) {
   const bAgain = el('button', 'btn', '🗼 Climb again');
   bAgain.onclick = renderClasses;
   btns.append(bForge, bAgain);
+  if (summary.seed != null) {
+    const bReplay = el('button', 'btn ghost', `↻ Retry this seed`);
+    bReplay.onclick = () => beginRun(summary.cls, summary.seed);
+    btns.append(bReplay);
+  }
   screenEl.appendChild(btns);
 }
 

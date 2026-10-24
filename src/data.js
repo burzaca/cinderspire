@@ -31,11 +31,11 @@ export const ABILITIES = {
   cinder_lance: { name: 'Cinder Lance', cls: 'emberwright', cost: 15, cooldown: 0, power: 2.2, rarity: 'common', icon: '🔺', flavor: 'A spear of cooled slag.' },
   ember_wave: { name: 'Ember Wave', cls: 'emberwright', cost: 25, cooldown: 4, power: 1.1, aoe: true, burn: 5, rarity: 'common', icon: '🌊', flavor: 'Heat does not knock.' },
   wildfire: { name: 'Wildfire', cls: 'emberwright', cost: 25, cooldown: 6, burn: 10, selfDamage: 6, rarity: 'uncommon', icon: '🔥', flavor: 'Fire eats whoever feeds it.' },
-  kindling: { name: 'Kindling', cls: 'emberwright', cost: 20, cooldown: 10, burnAmp: 0.6, buff: 1, rarity: 'uncommon', icon: '🪵', flavor: 'Everything burns better.' },
+  kindling: { name: 'Kindling', cls: 'emberwright', cost: 20, cooldown: 10, burnAmp: 0.7, buff: 1, rarity: 'uncommon', icon: '🪵', flavor: 'Everything burns better.' },
   sear: { name: 'Sear', cls: 'emberwright', cost: 20, cooldown: 8, slow: 2, weaken: 1, rarity: 'uncommon', icon: '♨️', flavor: 'Soft knees, soft steel.' },
-  ash_shield: { name: 'Ash Shield', cls: 'emberwright', cost: 20, cooldown: 8, shield: 22, rarity: 'uncommon', icon: '🌫️', flavor: 'Smoke you can hide behind.' },
+  ash_shield: { name: 'Ash Shield', cls: 'emberwright', cost: 20, cooldown: 8, shield: 28, rarity: 'uncommon', icon: '🌫️', flavor: 'Smoke you can hide behind.' },
   cinder_rain: { name: 'Cinder Rain', cls: 'emberwright', cost: 40, cooldown: 10, power: 0.9, aoe: true, burn: 4, rarity: 'rare', icon: '🌠', flavor: 'The sky owes you nothing.' },
-  pyroclasm: { name: 'Pyroclasm', cls: 'emberwright', cost: 50, cooldown: 12, power: 2.6, aoe: true, burn: 5, rarity: 'rare', icon: '💥', flavor: 'The mountain clears its throat.' },
+  pyroclasm: { name: 'Pyroclasm', cls: 'emberwright', cost: 50, cooldown: 12, power: 2.9, aoe: true, burn: 5, rarity: 'rare', icon: '💥', flavor: 'The mountain clears its throat.' },
 
   // ---- Ironsoul ----
   iron_jab: { name: 'Iron Jab', cls: 'ironsoul', cost: 12, cooldown: 0, power: 1.5, rarity: 'common', icon: '👊', flavor: 'Fundamentals.' },
