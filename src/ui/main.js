@@ -897,7 +897,10 @@ function menuModal() {
     ]);
   }, 'ghost']);
   acts.push(['Close']);
-  modal('Menu', [], acts);
+  const credit = el('p', null, '');
+  credit.style.cssText = 'opacity:.55;font-size:.75rem;text-align:center;margin-top:10px';
+  credit.textContent = 'CINDERSPIRE v1.0 — built in ~10 hours by Anakin, muha7a\u2019s sysagent. Deterministic engine, zero dependencies.';
+  modal('Menu', [credit], acts);
 }
 
 /* ---------------- boot ---------------- */
