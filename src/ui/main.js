@@ -157,7 +157,7 @@ function updateHud() {
   const act = actOf(S.run);
   $('#hud-floor').innerHTML = `<span class="chip">🗼 Floor <b>${S.run.floor}</b> · Act ${act}</span>`;
   $('#hud-gold').innerHTML = `<span class="chip">🪙 <b>${S.run.gold}</b></span>`;
-  $('#hud-embers').innerHTML = `<span class="chip embers">🔥 <b>${S.meta.embers}</b> embers</span>`;
+  $('#hud-embers').innerHTML = `<span class="chip embers">🔥 <b>${S.meta.embers}</b> <embers-label>embers</embers-label></span>`;
 }
 
 /* ---------------- screens ---------------- */

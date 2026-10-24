@@ -28,9 +28,9 @@ export const CLASSES = {
 // power = damage as multiple of attack. Costs are mana; cooldowns seconds.
 export const ABILITIES = {
   // ---- Emberwright ----
-  cinder_lance: { name: 'Cinder Lance', cls: 'emberwright', cost: 15, cooldown: 0, power: 2.0, rarity: 'common', icon: '🔺', flavor: 'A spear of cooled slag.' },
-  ember_wave: { name: 'Ember Wave', cls: 'emberwright', cost: 25, cooldown: 4, power: 1.1, aoe: true, burn: 4, rarity: 'common', icon: '🌊', flavor: 'Heat does not knock.' },
-  wildfire: { name: 'Wildfire', cls: 'emberwright', cost: 25, cooldown: 6, burn: 9, selfDamage: 6, rarity: 'uncommon', icon: '🔥', flavor: 'Fire eats whoever feeds it.' },
+  cinder_lance: { name: 'Cinder Lance', cls: 'emberwright', cost: 15, cooldown: 0, power: 2.2, rarity: 'common', icon: '🔺', flavor: 'A spear of cooled slag.' },
+  ember_wave: { name: 'Ember Wave', cls: 'emberwright', cost: 25, cooldown: 4, power: 1.1, aoe: true, burn: 5, rarity: 'common', icon: '🌊', flavor: 'Heat does not knock.' },
+  wildfire: { name: 'Wildfire', cls: 'emberwright', cost: 25, cooldown: 6, burn: 10, selfDamage: 6, rarity: 'uncommon', icon: '🔥', flavor: 'Fire eats whoever feeds it.' },
   kindling: { name: 'Kindling', cls: 'emberwright', cost: 20, cooldown: 10, burnAmp: 0.6, buff: 1, rarity: 'uncommon', icon: '🪵', flavor: 'Everything burns better.' },
   sear: { name: 'Sear', cls: 'emberwright', cost: 20, cooldown: 8, slow: 2, weaken: 1, rarity: 'uncommon', icon: '♨️', flavor: 'Soft knees, soft steel.' },
   ash_shield: { name: 'Ash Shield', cls: 'emberwright', cost: 20, cooldown: 8, shield: 22, rarity: 'uncommon', icon: '🌫️', flavor: 'Smoke you can hide behind.' },

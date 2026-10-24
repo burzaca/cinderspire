@@ -5,11 +5,29 @@ import {
   finishFloor, runSummary, computeStats, resolveEvent, applyRest, buyItem,
 } from '../src/run.js';
 import { autopilot } from '../src/engine.js';
-import { defaultMeta, metaBonuses } from '../src/meta.js';
-import { CLASSES } from '../src/data.js';
-import { pickDoor } from './sim_helpers.js';
+import { defaultMeta, metaBonuses, buyForge } from '../src/meta.js';
+import { CLASSES, FORGE } from '../src/data.js';
+import { pickDoor, pickSpoil, abilityScore } from './sim_helpers.js';
 
 const RUNS = parseInt(process.argv[2] || '40', 10);
+const TIER = parseInt(process.argv[3] || '0', 10); // 0=fresh player, 1=seasoned (forge spread), 2=engrinded (+reforges)
+
+function buildMeta(tier) {
+  const meta = defaultMeta();
+  if (tier >= 1) {
+    const spread = { heart_coal: 3, bellows_up: 2, deep_lungs: 2, slag_hide: 2, purse: 2, quickstep_meta: 1 };
+    for (const [id, lvl] of Object.entries(spread)) {
+      for (let i = 0; i < lvl; i++) {
+        const up = FORGE.find((u) => u.id === id);
+        meta.embers += 10000; // grant budget; cost accounting still applies
+        buyForge(meta, id);
+      }
+    }
+    meta.unlocked.ironsoul = meta.unlocked.gravetongue = true;
+  }
+  if (tier >= 2) { meta.cinders = 3; meta.embers = 0; }
+  return meta;
+}
 
 function playRun(seed, cls, meta) {
   const bonuses = metaBonuses(meta);
@@ -27,11 +45,12 @@ function playRun(seed, cls, meta) {
       combat.runToCompletion(autopilot(), 600);
       if (!combat.win) { run.over = true; break; }
       const { spoils } = applyVictory(run, combat, bonuses);
-      const abilityOffer = spoils.find((s) => s.kind === 'ability');
-      takeSpoil(run, abilityOffer || spoils[0]);
+      takeSpoil(run, pickSpoil(run, spoils, bonuses));
     } else if (res.type === 'shop') {
-      const item = run.shop.find((it) => it.kind === 'ability' && run.gold >= it.price * 2);
-      if (item) buyItem(run, item);
+      const stats = computeStats(run, bonuses);
+      const affordable = run.shop.filter((it) => it.kind === 'ability' && run.gold >= it.price * 1.5);
+      affordable.sort((a, b) => abilityScore(b.id, run, stats) - abilityScore(a.id, run, stats));
+      if (affordable.length && abilityScore(affordable[0].id, run, stats) >= 1.6) buyItem(run, affordable[0]);
     } else if (res.type === 'event') {
       resolveEvent(run, run.event.choices[run.event.choices.length - 1], bonuses);
     } else if (res.type === 'rest') {
@@ -43,7 +62,7 @@ function playRun(seed, cls, meta) {
 }
 
 async function main() {
-  const meta = defaultMeta();
+  const meta = buildMeta(TIER);
   const results = {};
   for (const cls of Object.keys(CLASSES)) {
     const floors = [], acts = [], bosses = [];
