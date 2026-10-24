@@ -34,9 +34,12 @@ test('hashSeed is stable across calls', () => {
   assert.notEqual(hashSeed('a'), hashSeed('b'));
 });
 
-test('todaySeed is stable for a fixed date', () => {
-  const d = new Date('2026-10-24T12:00:00Z');
-  assert.equal(todaySeed(d), todaySeed(new Date('2026-10-24T23:59:59Z')));
+test('todaySeed is stable within a local calendar day and flips at midnight', () => {
+  const noon = new Date(2026, 9, 24, 12, 0, 0);
+  const lateNight = new Date(2026, 9, 24, 23, 59, 59);
+  const nextDay = new Date(2026, 9, 25, 0, 1, 0);
+  assert.equal(todaySeed(noon), todaySeed(lateNight));
+  assert.notEqual(todaySeed(noon), todaySeed(nextDay));
 });
 
 test('weighted respects zero weights', () => {
