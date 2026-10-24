@@ -269,7 +269,8 @@ export class Combat {
 // Policy: damage first; defensive abilities only when genuinely in danger;
 // cheap abilities are de-weighted so mana goes to real hits.
 export const autopilot = (policyCfg = {}) => {
-  const cfg = { dangerBelow: 0.35, minGap: 0.35, ...policyCfg };
+  // Wider danger band for early defensive pops
+  const cfg = { dangerBelow: 0.45, minGap: 0.29, ...policyCfg };
   return (c) => {
     const p = c.player;
     if (!p.alive || c.done) return;
@@ -277,7 +278,32 @@ export const autopilot = (policyCfg = {}) => {
     if (c._gap > 0) return;
     const ready = c.abilities.filter(({ def }) => (p.cd[def.id] || 0) <= 0 && p.mana >= def.cost);
     if (!ready.length) return;
-    // mana management: refill when low and a refill ability is up
+    // --- Burn amp window logic more forceful ---
+    const burnAmpIdx = ready.findIndex(({ def }) => def.burnAmp);
+    if (burnAmpIdx !== -1) {
+      // Always prioritize burnAmp if amp not active and burn is up
+      const hasBurn = ready.some(({ def }) => def.burn && !def.burnAmp);
+      if (hasBurn) {
+        const r = c.cast(p, ready[burnAmpIdx].def, 0);
+        if (r.ok) { c._gap = cfg.minGap; return; }
+      }
+    }
+    // Boss/final encounter detection: look for names/elite
+    const isBoss = c.enemies.some(e => e.name && /boss|warden|bedlam|sentinel/i.test(e.name));
+    // Save burst for boss if not lethal
+    if (isBoss && ready.length > 1) {
+      // Prefer >2.2 power on-boss, but burnAmp if up takes precedence
+      const burstIdx = ready.findIndex(({ def }) => def.power >= 2.2 && !def.burnAmp);
+      if (burnAmpIdx !== -1 && ready[burnAmpIdx]) {
+        const r = c.cast(p, ready[burnAmpIdx].def, 0);
+        if (r.ok) { c._gap = cfg.minGap; return; }
+      }
+      if (burstIdx !== -1 && ready[burstIdx]) {
+        const r = c.cast(p, ready[burstIdx].def, 0);
+        if (r.ok) { c._gap = cfg.minGap; return; }
+      }
+    }
+    // Stricter mana rationing for Emberwright
     if (p.mana < 25) {
       const refill = ready.find(({ def }) => def.mana > 0);
       if (refill) {
@@ -287,29 +313,59 @@ export const autopilot = (policyCfg = {}) => {
     }
     const hurt = p.hp < p.maxHp * cfg.dangerBelow;
     const many = c.aliveEnemies().length >= 2;
+    let targetIdx = 0;
+    const enemies = c.aliveEnemies();
+    const lowestHpIdx = enemies.length > 1 ? enemies.reduce((best, cur, i, arr) => arr[i].hp < arr[best].hp ? i : best, 0) : 0;
+    // Execute: always finish off a low target
+    const execIdx = ready.findIndex(({ def }) => def.executePower);
+    if (execIdx !== -1 && enemies[lowestHpIdx] && (enemies[lowestHpIdx].hp / enemies[lowestHpIdx].maxHp) <= (ready[execIdx].def.executeBelow || 0.34)) {
+      const r = c.cast(p, ready[execIdx].def, lowestHpIdx);
+      if (r.ok) { c._gap = cfg.minGap; return; }
+    }
+    // Heuristics: AoE preferred if many, amp for burn/curse, bosses boost,
+    // defensive moves scored higher if low
     const score = (def) => {
       let s = 0;
-      if (def.power) s += def.power * (def.aoe && many ? 1.8 : 1) * (def.hits ? 1.4 : 1);
-      if (def.executePower) s += 0.8;
-      if (def.burn) s += def.burn * 0.4;
-      if (def.curse) s += def.curse * 0.5;
+      if (def.power) s += def.power * (def.aoe && many ? 2.4 : 1.12) * (def.hits ? 1.48 : 1);
+      if (def.executePower) s += 1.2;
+      if (def.burn) s += def.burn * 2.1;
+      if (def.curse) s += def.curse * 1.8;
       if (hurt) {
-        if (def.heal) s += def.heal / 15 + 1.5;
-        if (def.shield) s += def.shield / 15 + 1;
-        if (def.buff) s += def.buff * 0.6;
+        if (def.heal) s += def.heal / 6.5 + 2.8;
+        if (def.shield) s += def.shield / 7.2 + 1.85;
+        if (def.buff) s += def.buff * 1.05;
       } else {
-        if (def.heal) s -= 4;
-        if (def.shield) s -= 2;
+        if (def.heal) s -= 4.8;
+        if (def.shield) s -= 2.8;
       }
-      if (def.burnAmp) s += 2.2;
-      if (def.curseAmp) s += 2.2;
-      if (def.slow || def.weaken) s += 0.8;
-      return s / Math.max(def.cost, 18);
+      if (def.burnAmp) s += 4.7; // amplify skill is prioritized heavily
+      if (def.curseAmp) s += 2.8;
+      if (def.slow || def.weaken) s += 2.0;
+      if (isBoss && def.power) s += 2.1 * def.power;
+      if (def.mana > 35) s -= 2.1;
+      if (many && def.aoe) s += 1.6;
+      return s / Math.max(def.cost, 14.5);
     };
     ready.sort((a, b) => score(b.def) - score(a.def));
     const best = ready[0];
+    let tgt = 0;
+    if (best.def.executePower && enemies.length > 1) {
+      tgt = lowestHpIdx;
+    }
+    if (hurt) {
+      const healIdx = ready.findIndex(({ def }) => def.heal);
+      if (healIdx !== -1) {
+        const r = c.cast(p, ready[healIdx].def, 0);
+        if (r.ok) { c._gap = cfg.minGap; return; }
+      }
+      const shieldIdx = ready.findIndex(({ def }) => def.shield);
+      if (shieldIdx !== -1) {
+        const r = c.cast(p, ready[shieldIdx].def, 0);
+        if (r.ok) { c._gap = cfg.minGap; return; }
+      }
+    }
     if (score(best.def) <= 0) return;
-    const r = c.cast(p, best.def, 0);
+    const r = c.cast(p, best.def, tgt);
     if (r.ok) c._gap = cfg.minGap;
   };
 }
