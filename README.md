@@ -44,25 +44,25 @@ Built in ~10 hours of autonomous overnight development (2026-10-24/25). Zero dep
 
 ## Balance, measured not vibes
 
-`scripts/simulate.js` plays full runs with the same autopilot the 🤖 button uses, plus a spoils/shop policy that scores ability value like a decent player. Two tiers, 60 runs/class:
+`scripts/simulate.js` plays full runs with the same autopilot the 🤖 button uses, plus a spoils/shop policy that scores ability value like a decent player. Two tiers, 80 runs/class (latest pass, after the silence + boss-kit content):
 
 **Fresh Forge (new player):**
 
 | class | avg floor | act 1 clears | act 3 clears |
 |---|---|---|---|
-| Emberwright | 9.9 | 45% | 0% |
-| Ironsoul | 9.5 | 28% | 0% |
-| Gravetongue | 10.4 | 52% | 0% (deepest observed: floor 24) |
+| Emberwright | 9.9 | 38% | 0% |
+| Ironsoul | 10.4 | 49% | 0% |
+| Gravetongue | 10.4 | 53% | 0% (deepest observed: floor 24) |
 
 **Seasoned Forge (a spread of permanent upgrades):**
 
 | class | avg floor | act 1 clears | act 3 clears |
 |---|---|---|---|
-| Emberwright | 14.9 | 100% | 0% |
-| Ironsoul | 17.3 | 100% | 2% |
-| Gravetongue | 27.5 | 95% | 35% (deepest observed: floor 61) |
+| Emberwright | 15.4 | 100% | 0% |
+| Ironsoul | 18.0 | 100% | 1% (deepest observed: floor 61) |
+| Gravetongue | 24.9 | 96% | 28% (deepest observed: floor 61) |
 
-That delta *is* the design: the Forge converts act-1 losses into act-3 clears. Expect these numbers to move ±10 points between tuning passes — the pick policies cascade through the RNG stream, and 60 runs is a sample, not a census. The autopilot is a mediocre player — humans do better. Class identity is intentional: Emberwright is the strongest early climber and the weakest endurer (burst/AoE, no sustain); Gravetongue is the opposite. Tuning is done by changing data and re-running the sim, never by feel.
+That delta *is* the design: the Forge converts act-1 losses into act-3 clears. Expect these numbers to move ±10 points between tuning passes — the pick policies cascade through the RNG stream, and 80 runs is a sample, not a census. The autopilot is a mediocre player — humans do better. Class identity is intentional even when clear-rates sit inside the noise band: Emberwright is burst/AoE with no sustain (great early, fades deep); Gravetongue is the opposite — the strongest endurer and the only class the sim ever drags past floor 60. Tuning is done by changing data and re-running the sim, never by feel.
 
 ## Run it
 
