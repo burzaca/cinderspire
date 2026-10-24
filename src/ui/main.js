@@ -425,18 +425,23 @@ const autoPolicy = autopilot();
 function combatLoop(t) {
   const c = S.combat;
   if (!c || S.screen !== 'combat') return;
-  const dt = Math.min(0.25, (t - S.lastT) / 1000);
-  S.lastT = t;
-  if (!S.paused) {
-    S.acc += dt * S.speed;
-    while (S.acc >= TICK) {
-      if (S.auto) autoPolicy(c);
-      c.step(TICK);
-      S.acc -= TICK;
+  try {
+    const dt = Math.min(0.25, (t - S.lastT) / 1000);
+    S.lastT = t;
+    if (!S.paused) {
+      S.acc += dt * S.speed;
+      while (S.acc >= TICK) {
+        if (S.auto) autoPolicy(c);
+        c.step(TICK);
+        S.acc -= TICK;
+      }
+      processEvents(c);
+      updateCombatDOM();
+      if (c.done) { onCombatEnd(); return; }
     }
-    processEvents(c);
-    updateCombatDOM();
-    if (c.done) { onCombatEnd(); return; }
+  } catch (e) {
+    console.error('combat loop error', e);
+    toast('A hiccup passed. The climb continues.');
   }
   S.raf = requestAnimationFrame(combatLoop);
 }
@@ -453,7 +458,7 @@ function processEvents(c) {
     else if (ev.kind === 'curse') floatAt(ui?.card, `-${ev.amount}`, 'curse');
     else if (ev.kind === 'shield') floatAt(ui?.card, `🛡${ev.amount}`, 'shield');
     else if (ev.kind === 'thorns') floatAt(ui?.card, `-${ev.amount}`, 'thorns');
-    else if (ev.kind === 'death') { if (ui) ui.card.classList.add('dead'); beep('die'); }
+    else if (ev.kind === 'death') { if (ui && ui.card) ui.card.classList.add('dead'); beep('die'); }
     else if (ev.kind === 'revive') { toast('The Second Ember flares — you rise!'); }
   }
   c.events.length = 0;
@@ -851,7 +856,7 @@ function menuModal() {
 }
 
 /* ---------------- boot ---------------- */
-window.__S = S; window.__renderTower = renderTower; window.__renderTitle = renderTitle; window.__screenEl = screenEl; // debug hooks
+window.__S = S; window.__renderTower = renderTower; window.__renderTitle = renderTitle; window.__screenEl = screenEl; window.__beginRun = beginRun; window.__endRun = endRun; window.__onCombatEnd = onCombatEnd; // debug hooks
 function boot() {
   S.meta = loadJSON('meta') || defaultMeta();
   const idle = collectIdle(S.meta, Date.now());
