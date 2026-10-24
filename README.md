@@ -35,8 +35,8 @@ Built in ~10 hours of autonomous overnight development (2026-10-24/25). Zero dep
 
 | | |
 |---|---|
-| 3 classes | 🔥 Emberwright (burn amplifiers) · ⚙️ Ironsoul (shields, thorns) · 💀 Gravetongue (curses, lifesteal) |
-| 32 abilities | mana/cooldown gated, 3 upgrade levels each |
+| 4 classes | 🔥 Emberwright (burn amplifiers) · ⚙️ Ironsoul (shields, thorns) · 💀 Gravetongue (curses, lifesteal) · 🗡️ Quickthistle (speed, crits, execute) |
+| 40 abilities | mana/cooldown gated, 3 upgrade levels each |
 | 24 relics | permanent-for-the-run stat artifacts, incl. a one-use revive |
 | 24 enemies + 3 bosses | with their own ability AI (slams, hexes, war cries, self-heals, thorns) — and the Pale Choir **silences one of your abilities** mid-fight |
 | 15 events, 4 potions, 15 level-up boons | the soft parts of a hard tower |
@@ -44,7 +44,7 @@ Built in ~10 hours of autonomous overnight development (2026-10-24/25). Zero dep
 
 ## Balance, measured not vibes
 
-`scripts/simulate.js` plays full runs with the same autopilot the 🤖 button uses, plus a spoils/shop policy that scores ability value like a decent player. Two tiers, 80 runs/class (latest pass, after the silence + boss-kit content):
+`scripts/simulate.js` plays full runs with the same autopilot the 🤖 button uses, plus a spoils/shop policy that scores ability value like a decent player. Two tiers, 80 runs/class (latest pass, all four classes):
 
 **Fresh Forge (new player):**
 
@@ -53,6 +53,7 @@ Built in ~10 hours of autonomous overnight development (2026-10-24/25). Zero dep
 | Emberwright | 9.9 | 38% | 0% |
 | Ironsoul | 10.4 | 49% | 0% |
 | Gravetongue | 10.4 | 53% | 0% (deepest observed: floor 24) |
+| Quickthistle | 12.3 | 69% | 0% |
 
 **Seasoned Forge (a spread of permanent upgrades):**
 
@@ -61,8 +62,9 @@ Built in ~10 hours of autonomous overnight development (2026-10-24/25). Zero dep
 | Emberwright | 15.4 | 100% | 0% |
 | Ironsoul | 18.0 | 100% | 1% (deepest observed: floor 61) |
 | Gravetongue | 24.9 | 96% | 28% (deepest observed: floor 61) |
+| Quickthistle | 17.1 | 100% | 0% |
 
-That delta *is* the design: the Forge converts act-1 losses into act-3 clears. Expect these numbers to move ±10 points between tuning passes — the pick policies cascade through the RNG stream, and 80 runs is a sample, not a census. The autopilot is a mediocre player — humans do better. Class identity is intentional even when clear-rates sit inside the noise band: Emberwright is burst/AoE with no sustain (great early, fades deep); Gravetongue is the opposite — the strongest endurer and the only class the sim ever drags past floor 60. Tuning is done by changing data and re-running the sim, never by feel.
+That delta *is* the design: the Forge converts act-1 losses into act-3 clears. Expect these numbers to move ±10 points between tuning passes — the pick policies cascade through the RNG stream, and 80 runs is a sample, not a census. The autopilot is a mediocre player — humans do better. Class identity shows up clearly in the data: Quickthistle is the best early climber (69% fresh) but the sim never drags it past floor 24 — fragile things break deep. Gravetongue is the opposite: modest early, the only class that reliably reaches act 3. Tuning is done by changing data and re-running the sim, never by feel.
 
 ## Run it
 
