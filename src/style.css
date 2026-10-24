@@ -61,6 +61,10 @@ body {
   #hud .chip embers-label { display: none; }
 }
 #hud .chip b { color: var(--ember2); font-weight: 600; }
+.muted-small { color: var(--muted); font-size: .85rem; }
+.ach-row { padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px; margin: 4px 0; font-size: .88rem; }
+.ach-row.got { border-color: var(--ember); background: rgba(255, 140, 50, .06); }
+.ach-reward { color: var(--gold); font-size: .8rem; }
 #hud .embers b { color: var(--gold); }
 .icon-btn {
   background: var(--panel2); color: var(--text); border: 1px solid var(--line);

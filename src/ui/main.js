@@ -849,9 +849,25 @@ function helpModal() {
     el('p', null, `<b>Controls.</b> ⏸ pause · 1×/2×/3× speed · 🤖 autopilot (watch, or learn). Boss floors always start with a camp (full heal).`),
   ], [['Got it']]);
 }
+function achievementsModal() {
+  const rows = [];
+  const st = S.meta.stats || {};
+  const statsLine = el('p', 'muted-small',
+    `Runs: ${st.runs || 0} · Best floor: ${st.bestFloor || 0} · Bosses: ${st.bossKills || 0} · Reforges: ${st.reforges || 0} · Cinders: ${S.meta.cinders || 0}`);
+  rows.push(statsLine);
+  for (const a of ACHIEVEMENTS) {
+    const got = !!S.meta.achievements[a.id];
+    const row = el('div', 'ach-row' + (got ? ' got' : ''));
+    row.innerHTML = `<b>${got ? '🔥 ' : '🔒 '}${a.name}</b> — ${a.desc} <span class="ach-reward">+${a.reward} embers</span>`;
+    rows.push(row);
+  }
+  modal('Achievements & legacy', rows, [['Close']]);
+}
+
 function menuModal() {
   const acts = [];
   if (S.run) acts.push(['Abandon run (bank embers)', () => endRun(false), 'danger']);
+  acts.push(['Achievements & legacy', achievementsModal]);
   acts.push(['How to play', helpModal]);
   acts.push(['Reset ALL progress', () => {
     modal('Reset everything?', [el('p', null, 'Embers, Forge, achievements, everything. This cannot be undone.')], [
