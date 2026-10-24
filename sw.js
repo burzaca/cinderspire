@@ -1,9 +1,9 @@
 const CACHE_NAME = 'cinderspire-v1';
 const FILES = [
-  '/',
-  '/index.html',
-  '/manifest.webmanifest',
-  '/icon.svg',
+  
+  './index.html',
+  './manifest.webmanifest',
+  './icon.svg',
 ];
 self.addEventListener('install', event => {
   event.waitUntil(
