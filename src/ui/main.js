@@ -166,6 +166,10 @@ function clearScreen() { cancelAnimationFrame(S.raf); S.raf = 0; screenEl.innerH
 function renderTitle() {
   S.screen = 'title'; S.run = null; saveRun(); updateHud();
   clearScreen();
+  const art = el('div', 'title-art');
+  art.innerHTML = '<div class="tower"></div><div class="glow"></div>';
+  screenEl.appendChild(art);
+  spawnEmbers(art);
   screenEl.appendChild(el('h1', 'title', 'CINDERSPIRE'));
   screenEl.appendChild(el('p', 'sub', 'an incremental roguelike — climb the burning tower;<br>the Forge earns embers while you sleep'));
   const rate = idleRate(S.meta);
@@ -195,6 +199,41 @@ function renderTitle() {
 function fmtDur(s) {
   const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60);
   return h ? `${h}h ${m}m` : m ? `${m}m` : `${s}s`;
+}
+function spawnEmbers(host) {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const n = innerWidth < 500 ? 14 : 26;
+  for (let i = 0; i < n; i++) {
+    const d = el('div', 'ember-dot');
+    d.style.left = `${Math.random() * 100}%`;
+    d.style.setProperty('--drift', `${(Math.random() * 80 - 40)}px`);
+    d.style.animationDuration = `${5 + Math.random() * 7}s`;
+    d.style.animationDelay = `${Math.random() * 8}s`;
+    host.appendChild(d);
+  }
+}
+function kitModal() {
+  if (!S.run) return;
+  const stats = computeStats(S.run, metaBonuses(S.meta));
+  const nodes = [];
+  const sline = `HP ${Math.round(stats.maxHp)} · ATK ${stats.atk} · SPD ${stats.atkSpeed.toFixed(2)} · ARM ${stats.armor} · MR ${Math.round(stats.manaRegen)} · CRIT ${Math.round(stats.crit * 100)}%`;
+  nodes.push(el('p', null, sline));
+  for (const a of S.run.abilities) {
+    const def = abilityDef(a);
+    const row = el('div', 'kit-row');
+    row.innerHTML = `<span class="kicon">${def.icon}</span><div><div class="kname">${def.name}</div><div class="kdesc">${def.cost} mana · ${def.cooldown}s · ${abilityText(def)}</div></div><span class="klvl">Lv${a.level}</span>`;
+    nodes.push(row);
+  }
+  if (S.run.relics.length) {
+    nodes.push(el('div', 'section-head', 'Relics'));
+    for (const r of S.run.relics) {
+      const rel = RELICS[r];
+      const row = el('div', 'kit-row');
+      row.innerHTML = `<span class="kicon">${rel.icon}</span><div><div class="kname">${rel.name}</div><div class="kdesc">${rel.desc}</div></div>`;
+      nodes.push(row);
+    }
+  }
+  modal('Your kit', nodes, [['Close']]);
 }
 
 function renderClasses(seed) {
@@ -274,6 +313,9 @@ function renderTower() {
       ['Abandon', () => endRun(false), 'danger'], ['Keep climbing'],
     ]);
   };
+  const kitBtn = el('button', 'btn', '🎒 Your kit');
+  kitBtn.onclick = kitModal;
+  screenEl.appendChild(kitBtn);
   screenEl.appendChild(abandon);
 }
 function doorMeta(t) {
@@ -362,6 +404,19 @@ function renderCombat(kind) {
   S.paused = false; S.auto = false; S.acc = 0; S.lastT = performance.now();
   S.raf = requestAnimationFrame(combatLoop);
 }
+
+window.addEventListener('keydown', (e) => {
+  if (S.screen !== 'combat' || !S.combat) return;
+  if (e.target.tagName === 'INPUT') return;
+  const n = parseInt(e.key, 10);
+  if (n >= 1 && n <= 9) {
+    const a = S.combatUI?.abilityUI[n - 1];
+    if (a) a.btn.click();
+  } else if (e.key === ' ') {
+    e.preventDefault();
+    S.paused = !S.paused;
+  }
+});
 
 const autoPolicy = autopilot();
 function combatLoop(t) {

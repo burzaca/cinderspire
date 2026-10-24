@@ -273,6 +273,28 @@ p.sub { text-align: center; color: var(--muted); margin: .6rem 0 1.4rem; }
 #toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(18px + var(--safe-b)); background: var(--panel2); border: 1px solid var(--ember); color: var(--text); padding: 10px 16px; border-radius: 12px; z-index: 60; font-size: .9rem; opacity: 0; pointer-events: none; transition: opacity .25s; max-width: 92vw; }
 #toast.show { opacity: 1; }
 
+/* title art: tower silhouette + rising embers */
+.title-art { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.title-art .tower {
+  position: absolute; left: 50%; bottom: -4dvh; transform: translateX(-50%);
+  width: min(46vw, 300px); height: 72dvh; opacity: .12;
+  background:
+    linear-gradient(0deg, #000 0 55%, transparent 55%) 0 0/100% 100%,
+    repeating-linear-gradient(0deg, transparent 0 46px, #000 46px 50px);
+  clip-path: polygon(38% 100%, 30% 70%, 34% 70%, 28% 45%, 33% 45%, 26% 18%, 44% 0, 56% 0, 74% 18%, 67% 45%, 72% 45%, 66% 70%, 70% 70%, 62% 100%);
+}
+.title-art .glow { position: absolute; left: 50%; bottom: 60dvh; width: 120px; height: 120px; transform: translateX(-50%); border-radius: 50%; background: radial-gradient(circle, rgba(255,122,26,.5), transparent 70%); filter: blur(6px); animation: pulse 3.5s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: .55; transform: translateX(-50%) scale(1.25); } }
+.ember-dot { position: absolute; bottom: -10px; width: 4px; height: 4px; border-radius: 50%; background: var(--ember2); box-shadow: 0 0 8px 2px rgba(255,157,61,.6); animation: rise linear forwards; opacity: 0; }
+@keyframes rise { 0% { opacity: 0; transform: translateY(0) translateX(0); } 8% { opacity: .9; } 100% { opacity: 0; transform: translateY(-85dvh) translateX(var(--drift, 20px)); } }
+
+/* kit viewer */
+.kit-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.kit-row .kicon { font-size: 1.3rem; }
+.kit-row .kname { font-weight: 700; font-size: .9rem; }
+.kit-row .kdesc { color: var(--muted); font-size: .78rem; white-space: pre-line; }
+.kit-row .klvl { margin-left: auto; color: var(--ember2); font-size: .75rem; }
+
 /* landscape phones: two-column combat */
 @media (orientation: landscape) and (max-height: 520px) {
   .stage { display: grid; grid-template-columns: 1.2fr .8fr; grid-template-rows: auto 1fr; gap: 8px; }
