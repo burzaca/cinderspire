@@ -3,21 +3,21 @@
 
 export const CLASSES = {
   emberwright: {
-    name: 'Emberwright', glyph: '🜂', tag: 'Burn them bright.',
+    name: 'Emberwright', glyph: '🔥', tag: 'Burn them bright.',
     desc: 'Firecaller. Weak to face, strong over time — burns stack and amplify.',
     stats: { maxHp: 75, atk: 10, atkSpeed: 1.15, armor: 0, manaRegen: 13, crit: 0.05 },
     start: ['cinder_lance', 'ember_wave', 'kindling'],
     unlockCost: 0,
   },
   ironsoul: {
-    name: 'Ironsoul', glyph: '🜃', tag: 'Outlast, then break them.',
+    name: 'Ironsoul', glyph: '⚙️', tag: 'Outlast, then break them.',
     desc: 'Armored vanguard. Shields, thorns and heavy single hits.',
     stats: { maxHp: 100, atk: 11, atkSpeed: 0.8, armor: 2, manaRegen: 9, crit: 0.05 },
     start: ['iron_jab', 'bulwark', 'riposte'],
     unlockCost: 150,
   },
   gravetongue: {
-    name: 'Gravetongue', glyph: '🜁', tag: 'Everything feeds the grave.',
+    name: 'Gravetongue', glyph: '💀', tag: 'Everything feeds the grave.',
     desc: 'Cursebearer. Curses, lifesteal and slow attrition.',
     stats: { maxHp: 85, atk: 9, atkSpeed: 1.0, armor: 0, manaRegen: 11, crit: 0.05, lifesteal: 0.10 },
     start: ['grave_bite', 'hex', 'wither'],

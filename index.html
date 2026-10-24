@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#0d0a08">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="description" content="CINDERSPIRE — an incremental roguelike. Climb a burning tower in real-time auto-battler combat, die, and let the Forge earn embers while you sleep.">
+<title>CINDERSPIRE — climb the burning tower</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗼</text></svg>">
+<link rel="stylesheet" href="src/style.css">
+</head>
+<body>
+<div id="app">
+  <header id="hud" hidden>
+    <div class="hud-left">
+      <span class="hud-floor" id="hud-floor"></span>
+      <span class="hud-gold" id="hud-gold"></span>
+    </div>
+    <div class="hud-right">
+      <span class="hud-embers" id="hud-embers"></span>
+      <button class="icon-btn" id="btn-sound" title="sound">🔇</button>
+      <button class="icon-btn" id="btn-menu" title="menu">☰</button>
+    </div>
+  </header>
+  <main id="screen"></main>
+</div>
+<noscript><p style="padding:2rem;color:#eee">CINDERSPIRE needs JavaScript.</p></noscript>
+<script type="module" src="src/ui/main.js"></script>
+</body>
+</html>

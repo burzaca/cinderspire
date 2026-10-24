@@ -26,7 +26,7 @@ export function makeEntity(base, side) {
     revives: base.revives ?? 0,
     luck: base.luck ?? 0,
     goldBonus: base.goldBonus ?? 0,
-    glyph: base.glyph || (side === 'player' ? '☗' : '☠'),
+    glyph: base.glyph || (side === 'player' ? '🧗' : '☠️'),
     // runtime state
     hp: 0, shield: 0, mana: 0,
     burn: 0, burnT: 0, curse: 0, curseT: 0,
