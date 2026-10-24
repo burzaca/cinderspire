@@ -348,13 +348,14 @@ function renderCombat(kind) {
   const stage = el('div', 'stage');
 
   const enemiesWrap = el('div', 'enemies');
-  const enemyUI = c.enemies.map((e) => {
+  const enemyUI = c.enemies.map((e, i) => {
     const card = el('div', 'enemy');
     card.innerHTML = `<div class="eglyph">${e.glyph}</div><div class="ename">${e.name}</div>`;
     const hp = barEl('hp', e.hp, e.maxHp, e.shield);
     card.appendChild(hp);
     const statuses = el('div', 'statusrow');
     card.appendChild(statuses);
+    card.onclick = () => { if (e.alive && !c.done) { c.targetIdx = i; beep('ui'); } };
     enemiesWrap.appendChild(card);
     return { card, hp, statuses, entity: e };
   });
@@ -490,7 +491,7 @@ function updateCombatDOM() {
     u.hp._fill.style.width = `${Math.max(0, (e.hp / e.maxHp) * 100)}%`;
     u.hp.querySelector('.barlabel').textContent = `${Math.ceil(e.hp)}/${e.maxHp}${e.shield > 0 ? ` +${Math.round(e.shield)}` : ''}`;
     u.statuses.replaceChildren(...statusChips(e));
-    u.card.classList.toggle('target', i === c.enemies.findIndex((x) => x.alive));
+    u.card.classList.toggle('target', i === c.targetIdx && e.alive);
     if (!e.alive) u.card.classList.add('dead');
   });
   const p = c.player;
@@ -851,7 +852,7 @@ function helpModal() {
     el('p', null, `<b>The climb.</b> Each floor offers doors — fight, trade, rest, or something strange. Pick one. Death ends the run, but embers are always banked.`),
     el('p', null, `<b>Combat is real-time.</b> You and your foes auto-attack. Your abilities are the buttons: they cost mana and have cooldowns. Tap them. Burn and curse tick over time; shields soak hits; camps and salves heal.`),
     el('p', null, `<b>The Forge.</b> Embers buy permanent upgrades and idle income — the Forge earns embers even while you sleep. Reforge resets upgrades for Cinders, a permanent multiplier. That's the "incremental" part.`),
-    el('p', null, `<b>Controls.</b> ⏸ pause · 1×/2×/3× speed · 🤖 autopilot (watch, or learn). Boss floors always start with a camp (full heal).`),
+    el('p', null, `<b>Controls.</b> ⏸ pause · 1×/2×/3× speed · 🤖 autopilot (watch, or learn) · tap an enemy to retarget. Boss floors always start with a camp (full heal).`),
   ], [['Got it']]);
 }
 function achievementsModal() {

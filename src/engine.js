@@ -58,6 +58,7 @@ export class Combat {
     this.done = false;
     this.win = false;
     this.events = []; // per-frame events for the UI: {kind, src, tgt, amount, crit}
+    this.targetIdx = 0; // player's chosen target (index into enemies)
   }
 
   emit(ev) { if (this.events.length < 200) this.events.push(ev); }
@@ -116,6 +117,12 @@ export class Combat {
   }
 
   // ---- ability effects (instant) -------------------------------------------
+  currentTarget() {
+    let t = this.enemies[this.targetIdx];
+    if (!t || !t.alive) { t = this.aliveEnemies()[0]; if (t) this.targetIdx = this.enemies.indexOf(t); }
+    return t;
+  }
+
   cast(player, abilityDef, targetIdx = 0) {
     const def = abilityDef;
     if (!player.alive || this.done) return { ok: false, reason: 'over' };
@@ -126,7 +133,8 @@ export class Combat {
     player.cd[def.id] = def.cooldown * (1 - (player.cdr || 0));
     this.emit({ kind: 'cast', src: player, ability: def });
 
-    const targets = def.aoe ? this.aliveEnemies() : [this.aliveEnemies()[Math.min(targetIdx, this.aliveEnemies().length - 1)]].filter(Boolean);
+    const t = this.currentTarget();
+    const targets = def.aoe ? this.aliveEnemies() : (t ? [t] : []);
     if (def.selfDamage) this.applyDamage(player, def.selfDamage, null, { noThorns: true, melee: false });
 
     for (const t of targets) {
@@ -203,7 +211,7 @@ export class Combat {
     if (e.atkTimer >= interval) {
       e.atkTimer = 0;
       if (e.side === 'player') {
-        const t = this.aliveEnemies()[0];
+        const t = this.currentTarget();
         if (t) {
           const { dmg, crit } = this.rollDamage(e, t);
           this.applyDamage(t, dmg, e, { melee: true });
