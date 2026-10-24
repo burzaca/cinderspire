@@ -101,6 +101,8 @@ function modal(title, bodyNodes, actions = []) {
   }
   back.appendChild(m);
   back.onclick = (e) => { if (e.target === back) back.remove(); };
+  const esc = (e) => { if (e.key === 'Escape') { back.remove(); window.removeEventListener('keydown', esc); } };
+  window.addEventListener('keydown', esc);
   document.body.appendChild(back);
   return back;
 }
