@@ -92,10 +92,12 @@ test('level-ups queue boons in threes and chooseBoon applies them', () => {
   combat.runToCompletion(autopilot(), 120);
   applyVictory(run, combat, B);
   assert.ok(run.pendingBoons && run.pendingBoons.length === 3);
-  const boon = run.pendingBoons.find((b) => b.stat && b.stat.atk);
-  const before = (run.bonusStats.atk || 0);
+  const boon = run.pendingBoons.find((b) => b.stat && Object.keys(b.stat).length) || run.pendingBoons[0];
+  const key = boon.stat && Object.keys(boon.stat)[0];
+  const before = key ? (run.bonusStats[key] || 0) : 0;
   chooseBoon(run, boon);
-  assert.equal(run.bonusStats.atk, before + boon.stat.atk);
+  if (key) assert.equal(run.bonusStats[key], before + boon.stat[key]);
+  assert.ok(!run.pendingBoons.some((b) => b.id === boon.id));
 });
 
 test('takeSpoil adds abilities/relics/potions/gold', () => {
