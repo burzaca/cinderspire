@@ -7,7 +7,7 @@ import {
 import { autopilot } from '../src/engine.js';
 import { defaultMeta, metaBonuses, buyForge } from '../src/meta.js';
 import { CLASSES, FORGE } from '../src/data.js';
-import { pickDoor, pickSpoil, abilityScore } from './sim_helpers.js';
+import { pickDoor, pickSpoil, abilityScore, pickBoonSmart } from './sim_helpers.js';
 
 const RUNS = parseInt(process.argv[2] || '40', 10);
 const TIER = parseInt(process.argv[3] || '0', 10); // 0=fresh player, 1=seasoned (forge spread), 2=engrinded (+reforges)
@@ -35,7 +35,7 @@ function playRun(seed, cls, meta) {
   let guard = 0;
   while (!run.over && run.floor <= 60 && guard++ < 500) {
     while (run.pendingBoons && run.pendingBoons.length) {
-      const boon = run.pendingBoons[0];
+      const boon = pickBoonSmart(run, run.pendingBoons, bonuses);
       chooseBoon(run, boon);
     }
     const door = pickDoor(run, bonuses);

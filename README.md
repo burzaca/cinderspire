@@ -48,19 +48,19 @@ Built in ~10 hours of autonomous overnight development (2026-10-24/25). Zero dep
 
 | class | avg floor | act 1 clears | act 3 clears |
 |---|---|---|---|
-| Emberwright | 12.2 | 70% | 0% |
-| Ironsoul | 12.1 | 60% | 0% |
-| Gravetongue | 12.1 | 65% | 2% (deepest observed: floor 60) |
+| Emberwright | 9.9 | 45% | 0% |
+| Ironsoul | 9.5 | 28% | 0% |
+| Gravetongue | 10.4 | 52% | 0% (deepest observed: floor 24) |
 
 **Seasoned Forge (a spread of permanent upgrades):**
 
 | class | avg floor | act 1 clears | act 3 clears |
 |---|---|---|---|
-| Emberwright | 16.1 | 100% | 0% |
-| Ironsoul | 25.6 | 100% | 15% |
-| Gravetongue | 32.7 | 98% | 45% (deepest observed: floor 61) |
+| Emberwright | 14.9 | 100% | 0% |
+| Ironsoul | 17.3 | 100% | 2% |
+| Gravetongue | 27.5 | 95% | 35% (deepest observed: floor 61) |
 
-That delta *is* the design: the Forge converts act-1 losses into act-3 clears. The autopilot is a mediocre player — humans do better. Class identity is intentional: Emberwright is the strongest early climber and the weakest endurer (burst/AoE, no sustain — it falls off against high-HP act-3 bosses); Gravetongue is the opposite. The autopilot's heal-when-hurt policy under-plays burst classes, so treat the late-game gap as a ceiling, not a floor. Tuning is done by changing data and re-running the sim, never by feel.
+That delta *is* the design: the Forge converts act-1 losses into act-3 clears. Expect these numbers to move ±10 points between tuning passes — the pick policies cascade through the RNG stream, and 60 runs is a sample, not a census. The autopilot is a mediocre player — humans do better. Class identity is intentional: Emberwright is the strongest early climber and the weakest endurer (burst/AoE, no sustain); Gravetongue is the opposite. Tuning is done by changing data and re-running the sim, never by feel.
 
 ## Run it
 

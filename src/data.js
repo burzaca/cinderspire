@@ -108,9 +108,9 @@ export const ENEMY_ABILITIES = {
   warcry: { id: 'warcry', name: 'War Cry', cost: 35, cooldown: 12, buff: 3, ai: 0.85, icon: '📯' },
   mending: { id: 'mending', name: 'Mending', cost: 30, cooldown: 10, heal: 30, needsLowHp: true, ai: 0.9, icon: '🩹' },
   leech_bite: { id: 'leech_bite', name: 'Leech Bite', cost: 25, cooldown: 7, power: 1.0, heal: 12, ai: 0.85, icon: '🦟' },
-  curse_wail: { id: 'curse_wail', name: 'Curse Wail', cost: 30, cooldown: 9, curse: 8, ai: 0.8, icon: '😖' },
+  curse_wail: { id: 'curse_wail', name: 'Curse Wail', cost: 30, cooldown: 9, curse: 6, ai: 0.8, icon: '😖' },
   spines: { id: 'spines', name: 'Spines', cost: 20, cooldown: 10, thornsGain: 4, ai: 0.7, icon: '🌵' },
-  heavy_bite: { id: 'heavy_bite', name: 'Heavy Bite', cost: 40, cooldown: 11, power: 1.9, ai: 0.9, icon: '🦷' },
+  heavy_bite: { id: 'heavy_bite', name: 'Heavy Bite', cost: 40, cooldown: 11, power: 1.6, ai: 0.9, icon: '🦷' },
 };
 
 export const ENEMIES = {
@@ -119,7 +119,7 @@ export const ENEMIES = {
   cinderling: { name: 'Cinderling', act: 1, glyph: '👺', stats: { maxHp: 55, atk: 5, atkSpeed: 1.0, armor: 1 }, abilities: ['spark_burn'], xp: 9, gold: 10 },
   wisp: { name: 'Wisp', act: 1, glyph: '💠', stats: { maxHp: 45, atk: 4.5, atkSpeed: 1.4, crit: 0.12 }, xp: 8, gold: 9 },
   cinder_bat: { name: 'Cinder Bat', act: 1, glyph: '🦇', stats: { maxHp: 35, atk: 5, atkSpeed: 1.6, crit: 0.15 }, xp: 8, gold: 9 },
-  soot_turtle: { name: 'Soot Turtle', act: 1, glyph: '🐢', stats: { maxHp: 70, atk: 4, atkSpeed: 0.7, armor: 4 }, abilities: ['shieldup', 'spines'], xp: 10, gold: 12 },
+  soot_turtle: { name: 'Soot Turtle', act: 1, glyph: '🐢', stats: { maxHp: 60, atk: 4, atkSpeed: 0.7, armor: 3 }, abilities: ['shieldup', 'spines'], xp: 10, gold: 12 },
   ember_hound: { name: 'Ember Hound', act: 1, glyph: '🐕‍🦺', elite: true, stats: { maxHp: 110, atk: 6.5, atkSpeed: 1.3 }, abilities: ['spark_burn'], xp: 20, gold: 28 },
   slagling: { name: 'Slagling', act: 1, glyph: '🗿', elite: true, stats: { maxHp: 120, atk: 6, atkSpeed: 0.9, armor: 3 }, abilities: ['slam'], xp: 20, gold: 28 },
   cinder_warden: { name: 'The Cinder Warden', act: 1, glyph: '🔥', boss: true, stats: { maxHp: 240, atk: 7, atkSpeed: 0.9, armor: 3 }, abilities: ['slam', 'spark_burn', 'warcry'], xp: 60, gold: 90 },
@@ -128,8 +128,8 @@ export const ENEMIES = {
   rust_golem: { name: 'Rust Golem', act: 2, glyph: '🤖', stats: { maxHp: 95, atk: 7, atkSpeed: 0.7, armor: 4 }, xp: 14, gold: 16 },
   hollow_adept: { name: 'Hollow Adept', act: 2, glyph: '🧙', stats: { maxHp: 75, atk: 6.5, atkSpeed: 1.1 }, abilities: ['chime'], xp: 13, gold: 15 },
   chime_wraith: { name: 'Chime Wraith', act: 2, glyph: '👻', stats: { maxHp: 70, atk: 7.5, atkSpeed: 1.3, crit: 0.15 }, abilities: ['chime'], xp: 13, gold: 15 },
-  forge_hound: { name: 'Forge Hound', act: 2, glyph: '🐕', stats: { maxHp: 85, atk: 8, atkSpeed: 1.2 }, abilities: ['heavy_bite', 'spark_burn'], xp: 15, gold: 17 },
-  hollow_deacon: { name: 'Hollow Deacon', act: 2, glyph: '🕸️', stats: { maxHp: 80, atk: 6.5, atkSpeed: 1.0 }, abilities: ['curse_wail', 'chime'], xp: 15, gold: 17 },
+  forge_hound: { name: 'Forge Hound', act: 2, glyph: '🐕', stats: { maxHp: 80, atk: 7, atkSpeed: 1.1 }, abilities: ['heavy_bite', 'spark_burn'], xp: 15, gold: 17 },
+  hollow_deacon: { name: 'Hollow Deacon', act: 2, glyph: '🕸️', stats: { maxHp: 70, atk: 6, atkSpeed: 1.0 }, abilities: ['curse_wail', 'chime'], xp: 15, gold: 17 },
   slag_brute: { name: 'Slag Brute', act: 2, glyph: '🦣', elite: true, stats: { maxHp: 170, atk: 9, atkSpeed: 0.8, armor: 5 }, abilities: ['slam'], xp: 34, gold: 45 },
   chain_warden: { name: 'Chain Warden', act: 2, glyph: '⛓️', elite: true, stats: { maxHp: 155, atk: 8, atkSpeed: 1.0, armor: 4 }, abilities: ['shieldup', 'slam'], xp: 34, gold: 45 },
   hollow_smith: { name: 'The Hollow Smith', act: 2, glyph: '🔨', boss: true, stats: { maxHp: 520, atk: 10, atkSpeed: 0.85, armor: 5 }, abilities: ['slam', 'warcry', 'mending'], xp: 90, gold: 150 },
@@ -137,8 +137,8 @@ export const ENEMIES = {
   // Act III — the Pale Choir
   pale_acolyte: { name: 'Pale Acolyte', act: 3, glyph: '🕯️', stats: { maxHp: 110, atk: 9, atkSpeed: 1.0 }, abilities: ['hexing'], xp: 22, gold: 24 },
   grave_moth: { name: 'Grave Moth', act: 3, glyph: '🦋', stats: { maxHp: 95, atk: 10, atkSpeed: 1.4 }, xp: 21, gold: 22 },
-  pale_thurible: { name: 'Pale Thurible', act: 3, glyph: '⛩️', stats: { maxHp: 120, atk: 8.5, atkSpeed: 0.9, armor: 3 }, abilities: ['curse_wail', 'gust'], xp: 23, gold: 25 },
-  grave_chorister: { name: 'Grave Chorister', act: 3, glyph: '🎓', stats: { maxHp: 100, atk: 9.5, atkSpeed: 1.5, crit: 0.18 }, abilities: ['leech_bite'], xp: 23, gold: 25 },
+  pale_thurible: { name: 'Pale Thurible', act: 3, glyph: '⛩️', stats: { maxHp: 110, atk: 8, atkSpeed: 0.9, armor: 2 }, abilities: ['curse_wail', 'gust'], xp: 23, gold: 25 },
+  grave_chorister: { name: 'Grave Chorister', act: 3, glyph: '🎓', stats: { maxHp: 95, atk: 8.5, atkSpeed: 1.4, crit: 0.15 }, abilities: ['leech_bite'], xp: 23, gold: 25 },
   choir_voice: { name: 'Choir Voice', act: 3, glyph: '🎻', stats: { maxHp: 105, atk: 8.5, atkSpeed: 1.2 }, abilities: ['gust'], xp: 22, gold: 24 },
   pale_knight: { name: 'Pale Knight', act: 3, glyph: '🛡️', elite: true, stats: { maxHp: 240, atk: 11, atkSpeed: 0.9, armor: 6 }, abilities: ['shieldup', 'slam'], xp: 50, gold: 70 },
   frost_herald: { name: 'Frost Herald', act: 3, glyph: '🧊', elite: true, stats: { maxHp: 220, atk: 10, atkSpeed: 1.1 }, abilities: ['gust', 'chime'], xp: 50, gold: 70 },

@@ -50,6 +50,21 @@ export function pickSpoil(run, spoils, bonuses) {
   return gold || best || spoils[0];
 }
 
+export function pickBoonSmart(run, boons, bonuses) {
+  const stats = computeStats(run, bonuses);
+  const hpPct = (run.hpCurrent == null ? stats.maxHp : run.hpCurrent) / stats.maxHp;
+  const W = { atk: 6, atkSpeed: 40, crit: 30, critMult: 8, maxHp: 1.0, armor: 8, manaRegen: 5, lifesteal: 25, thorns: 4, burnAmp: 12, curseAmp: 12, cdr: 15, manaMax: 0.4, regen: 6 };
+  let best = boons[0], bestScore = -Infinity;
+  for (const b of boons) {
+    let s = 0;
+    for (const [k, v] of Object.entries(b.stat || {})) s += (W[k] || 1) * v;
+    if (b.heal) s += (hpPct < 0.7 ? 0.8 : 0.2) * b.heal;
+    if (b.healPct) s += (hpPct < 0.7 ? 60 : 20) * b.healPct;
+    if (s > bestScore) { bestScore = s; best = b; }
+  }
+  return best;
+}
+
 // Door policy shared by the simulator and debug tools: a "decent player" proxy.
 export function pickDoor(run, bonuses) {
   const stats = computeStats(run, bonuses);
