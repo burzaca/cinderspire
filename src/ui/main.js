@@ -127,6 +127,7 @@ function statusChips(e) {
   if (e.slow > 0) out.push(['slow', `❄ ${e.slow}`]);
   if (e.weaken > 0) out.push(['weaken', `🥀 ${e.weaken}`]);
   if (e.buff > 0) out.push(['buff', `💪 ${e.buff}`]);
+  if (e.silenceT > 0 && e.silencedId) out.push(['silence', `🔇 ${Math.ceil(e.silenceT)}`]);
   return out.map(([k, t]) => el('span', `status ${k}`, t));
 }
 function abilityText(def) {
@@ -457,6 +458,7 @@ function processEvents(c) {
     } else if (ev.kind === 'heal') floatAt(ui?.card, `+${ev.amount}`, 'heal');
     else if (ev.kind === 'burn') floatAt(ui?.card, `-${ev.amount}`, 'burn');
     else if (ev.kind === 'curse') floatAt(ui?.card, `-${ev.amount}`, 'curse');
+    else if (ev.kind === 'silence') { floatAt(ui?.card, '🔇 silenced', 'bad'); toast('An ability falls silent.'); }
     else if (ev.kind === 'shield') floatAt(ui?.card, `🛡${ev.amount}`, 'shield');
     else if (ev.kind === 'thorns') floatAt(ui?.card, `-${ev.amount}`, 'thorns');
     else if (ev.kind === 'death') { if (ui && ui.card) ui.card.classList.add('dead'); beep('die'); }
@@ -500,10 +502,12 @@ function updateCombatDOM() {
   ui.pmana._fill.style.width = `${(p.mana / p.manaMax) * 100}%`;
   ui.abilityUI.forEach((a) => {
     const cd = p.cd[a.def.id] || 0;
-    const ready = cd <= 0 && p.mana >= a.def.cost;
+    const silenced = p.silenceT > 0 && p.silencedId === a.def.id;
+    const ready = cd <= 0 && p.mana >= a.def.cost && !silenced;
     a.veil.style.height = cd > 0 ? `${Math.min(100, (cd / Math.max(0.01, a.def.cooldown)) * 100)}%` : '0%';
     a.veil.textContent = cd > 0.2 ? cd.toFixed(1) : '';
-    a.btn.disabled = cd > 0 || p.mana < a.def.cost;
+    a.btn.classList.toggle('silenced', silenced);
+    a.btn.disabled = cd > 0 || p.mana < a.def.cost || silenced;
     if (ready && !a.wasReady) { a.btn.classList.add('ready-flash'); }
     a.wasReady = ready;
   });

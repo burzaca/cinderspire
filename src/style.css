@@ -193,6 +193,8 @@ p.sub { text-align: center; color: var(--muted); margin: .6rem 0 1.4rem; }
 .ability .acost { position: absolute; top: 4px; left: 6px; font-size: .7rem; font-weight: 800; color: var(--mana); }
 .ability .alevel { position: absolute; top: 4px; right: 6px; font-size: .62rem; color: var(--ember2); }
 .ability:disabled { opacity: .45; }
+.ability.silenced { filter: grayscale(1); border-color: #666; }
+.ability.silenced::after { content: '🔇'; position: absolute; inset: 0; display: grid; place-items: center; font-size: 1.6rem; background: rgba(0,0,0,.55); }
 .ability:active:not(:disabled) { transform: scale(.95); }
 .ability .cdveil {
   position: absolute; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,.62);

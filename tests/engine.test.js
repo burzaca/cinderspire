@@ -71,6 +71,38 @@ test('curse ticks every 3s at 1.2x stacks', () => {
   assert.equal(e.hp, 88);
 });
 
+test('silence locks one enemy ability and expires', () => {
+  const enemyAbilities = { E: [{ id: 'x', name: 'X', cost: 0, cooldown: 0, power: 5, ai: 1 }] };
+  const { c, enemies } = mkCombat({
+    player: { atkSpeed: 0 },
+    abilities: [{ id: 's', def: { id: 's', name: 'S', cost: 0, cooldown: 0, silence: 5 } }],
+    enemyAbilities,
+  });
+  const e = enemies[0];
+  e.mana = 999;
+  c.cast(c.player, c.abilities[0].def, 0);
+  assert.ok(e.silenceT > 0 && e.silencedId === 'x');
+  const pBefore = c.player.hp;
+  for (let i = 0; i < 40; i++) c.step(TICK); // 2s of enemy cast windows
+  assert.equal(c.player.hp, pBefore, 'silenced enemy must not cast');
+  for (let i = 0; i < 120; i++) c.step(TICK); // 6s more: silence expired
+  assert.ok(e.silenceT <= 0);
+  assert.equal(e.silencedId, null);
+});
+
+test('player cannot cast a silenced ability', () => {
+  const { c, player } = mkCombat({
+    player: { atkSpeed: 0 },
+    abilities: [{ id: 'a', def: { id: 'a', name: 'A', cost: 0, cooldown: 0, power: 1 } }],
+  });
+  player.silencedId = 'a'; player.silenceT = 5;
+  const r = c.cast(player, c.abilities[0].def, 0);
+  assert.equal(r.ok, false);
+  assert.equal(r.reason, 'silenced');
+  player.silenceT = 0; player.silencedId = null;
+  assert.equal(c.cast(player, c.abilities[0].def, 0).ok, true);
+});
+
 test('slow caps at 3 stacks of effect', () => {
   const { c, player, enemies } = mkCombat({ player: { atkSpeed: 1 } });
   const e = enemies[0];

@@ -107,6 +107,7 @@ export const ENEMY_ABILITIES = {
   hexing: { id: 'hexing', name: 'Hexing', cost: 30, cooldown: 8, curse: 6, ai: 0.8, icon: '🕸️' },
   warcry: { id: 'warcry', name: 'War Cry', cost: 35, cooldown: 12, buff: 3, ai: 0.85, icon: '📯' },
   mending: { id: 'mending', name: 'Mending', cost: 30, cooldown: 10, heal: 30, needsLowHp: true, ai: 0.9, icon: '🩹' },
+  anthem: { id: 'anthem', name: 'Anthem of Silence', cost: 40, cooldown: 14, silence: 5, ai: 0.9, icon: '🔇' },
   leech_bite: { id: 'leech_bite', name: 'Leech Bite', cost: 25, cooldown: 7, power: 1.0, heal: 12, ai: 0.85, icon: '🦟' },
   curse_wail: { id: 'curse_wail', name: 'Curse Wail', cost: 30, cooldown: 9, curse: 6, ai: 0.8, icon: '😖' },
   spines: { id: 'spines', name: 'Spines', cost: 20, cooldown: 10, thornsGain: 4, ai: 0.7, icon: '🌵' },
@@ -142,7 +143,7 @@ export const ENEMIES = {
   choir_voice: { name: 'Choir Voice', act: 3, glyph: '🎻', stats: { maxHp: 105, atk: 8.5, atkSpeed: 1.2 }, abilities: ['gust'], xp: 22, gold: 24 },
   pale_knight: { name: 'Pale Knight', act: 3, glyph: '🛡️', elite: true, stats: { maxHp: 240, atk: 11, atkSpeed: 0.9, armor: 6 }, abilities: ['shieldup', 'slam'], xp: 50, gold: 70 },
   frost_herald: { name: 'Frost Herald', act: 3, glyph: '🧊', elite: true, stats: { maxHp: 220, atk: 10, atkSpeed: 1.1 }, abilities: ['gust', 'chime'], xp: 50, gold: 70 },
-  pale_choir: { name: 'The Pale Choir', act: 3, glyph: '🎭', boss: true, stats: { maxHp: 800, atk: 12, atkSpeed: 1.0, armor: 5, lifesteal: 0.1 }, abilities: ['hexing', 'gust', 'warcry', 'mending'], xp: 140, gold: 260 },
+  pale_choir: { name: 'The Pale Choir', act: 3, glyph: '🎭', boss: true, stats: { maxHp: 800, atk: 12, atkSpeed: 1.0, armor: 5, lifesteal: 0.1 }, abilities: ['anthem', 'hexing', 'gust', 'warcry', 'mending'], xp: 140, gold: 260 },
 };
 
 export const ACT_NAMES = {

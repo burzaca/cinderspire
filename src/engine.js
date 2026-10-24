@@ -31,6 +31,7 @@ export function makeEntity(base, side) {
     hp: 0, shield: 0, mana: 0,
     burn: 0, burnT: 0, curse: 0, curseT: 0,
     slow: 0, weaken: 0, buff: 0, buffT: 0,
+    silencedId: null, silenceT: 0,
     atkTimer: 0, castTimer: 0, cd: {}, alive: true,
   };
   e.hp = e.maxHp;
@@ -128,6 +129,7 @@ export class Combat {
     if (!player.alive || this.done) return { ok: false, reason: 'over' };
     const cdLeft = player.cd[def.id] || 0;
     if (cdLeft > 0) return { ok: false, reason: 'cooldown' };
+    if (player.silenceT > 0 && player.silencedId === def.id) return { ok: false, reason: 'silenced' };
     if (player.mana < def.cost) return { ok: false, reason: 'mana' };
     player.mana -= def.cost;
     player.cd[def.id] = def.cooldown * (1 - (player.cdr || 0));
@@ -158,6 +160,10 @@ export class Combat {
       if (def.curse) { t.curse = Math.min(30, t.curse + def.curse); t.curseT = Math.max(t.curseT, 3); }
       if (def.slow) t.slow = Math.min(3, t.slow + def.slow);
       if (def.weaken) t.weaken = Math.min(5, t.weaken + def.weaken);
+      if (def.silence && t.alive) {
+        const opts = (this.enemyAbilities[t.name] || []).map((a) => a.id);
+        if (opts.length) { t.silencedId = this.rng.pick(opts); t.silenceT = def.silence; this.emit({ kind: 'silence', tgt: t, amount: def.silence }); }
+      }
     }
     if (def.shield) player.shield += def.shield;
     if (def.buff) { player.buff = Math.min(10, player.buff + def.buff); player.buffT = 8; }
@@ -181,6 +187,7 @@ export class Combat {
     if (e.regen > 0) e.hp = Math.min(e.maxHp, e.hp + e.regen * dt);
     for (const k of Object.keys(e.cd)) if (e.cd[k] > 0) e.cd[k] = Math.max(0, e.cd[k] - dt);
     if (e.buffT > 0) { e.buffT -= dt; if (e.buffT <= 0) e.buff = 0; }
+    if (e.silenceT > 0) { e.silenceT = Math.max(0, e.silenceT - dt); if (e.silenceT === 0) e.silencedId = null; }
 
     // damage over time
     if (e.burn > 0) {
@@ -234,6 +241,7 @@ export class Combat {
           const cdLeft = e.cd[def.id] || 0;
           if (cdLeft > 0 || e.mana < def.cost) continue;
           if (def.needsLowHp && e.hp > e.maxHp * 0.5) continue;
+          if (e.silenceT > 0 && e.silencedId === def.id) continue;
           if (this.rng.chance(def.ai ?? 0.85)) {
             e.mana -= def.cost;
             e.cd[def.id] = def.cooldown;
@@ -249,6 +257,10 @@ export class Combat {
             if (def.shield) e.shield += def.shield;
             if (def.buff) { e.buff = Math.min(10, e.buff + def.buff); e.buffT = 8; }
             if (def.heal) e.hp = Math.min(e.maxHp, e.hp + def.heal);
+            if (def.silence) {
+              const opts = this.abilities.map((a) => a.id);
+              if (opts.length) { this.player.silencedId = this.rng.pick(opts); this.player.silenceT = def.silence; this.emit({ kind: 'silence', tgt: this.player, amount: def.silence }); }
+            }
             break; // one ability per evaluation window
           }
         }
@@ -283,7 +295,7 @@ export const autopilot = (policyCfg = {}) => {
     if (!p.alive || c.done) return;
     c._gap = (c._gap || 0) - TICK;
     if (c._gap > 0) return;
-    const ready = c.abilities.filter(({ def }) => (p.cd[def.id] || 0) <= 0 && p.mana >= def.cost);
+    const ready = c.abilities.filter(({ def }) => (p.cd[def.id] || 0) <= 0 && p.mana >= def.cost && !(p.silenceT > 0 && p.silencedId === def.id));
     if (!ready.length) return;
     // mana management: refill when low and a refill ability is up
     if (p.mana < 25) {
