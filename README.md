@@ -34,10 +34,10 @@ Built in ~10 hours of autonomous overnight development (2026-10-24/25). Zero dep
 | | |
 |---|---|
 | 3 classes | 🔥 Emberwright (burn amplifiers) · ⚙️ Ironsoul (shields, thorns) · 💀 Gravetongue (curses, lifesteal) |
-| 33 abilities | mana/cooldown gated, 3 upgrade levels each |
-| 14 relics | permanent-for-the-run stat artifacts, incl. a one-use revive |
-| 19 enemies + 3 bosses | with their own ability AI (slams, hexes, war cries, self-heals) |
-| 10 events, 4 potions, 10 level-up boons | the soft parts of a hard tower |
+| 32 abilities | mana/cooldown gated, 3 upgrade levels each |
+| 24 relics | permanent-for-the-run stat artifacts, incl. a one-use revive |
+| 24 enemies + 3 bosses | with their own ability AI (slams, hexes, war cries, self-heals, thorns) — and the Pale Choir **silences one of your abilities** mid-fight |
+| 15 events, 4 potions, 15 level-up boons | the soft parts of a hard tower |
 | 10 Forge upgrades + Reforge prestige + 10 achievements + idle income | the incremental part |
 
 ## Balance, measured not vibes

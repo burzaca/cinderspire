@@ -123,7 +123,7 @@ export const ENEMIES = {
   soot_turtle: { name: 'Soot Turtle', act: 1, glyph: '🐢', stats: { maxHp: 60, atk: 4, atkSpeed: 0.7, armor: 3 }, abilities: ['shieldup', 'spines'], xp: 10, gold: 12 },
   ember_hound: { name: 'Ember Hound', act: 1, glyph: '🐕‍🦺', elite: true, stats: { maxHp: 110, atk: 6.5, atkSpeed: 1.3 }, abilities: ['spark_burn'], xp: 20, gold: 28 },
   slagling: { name: 'Slagling', act: 1, glyph: '🗿', elite: true, stats: { maxHp: 120, atk: 6, atkSpeed: 0.9, armor: 3 }, abilities: ['slam'], xp: 20, gold: 28 },
-  cinder_warden: { name: 'The Cinder Warden', act: 1, glyph: '🔥', boss: true, stats: { maxHp: 240, atk: 7, atkSpeed: 0.9, armor: 3 }, abilities: ['slam', 'spark_burn', 'warcry'], xp: 60, gold: 90 },
+  cinder_warden: { name: 'The Cinder Warden', act: 1, glyph: '🔥', boss: true, stats: { maxHp: 240, atk: 7, atkSpeed: 0.9, armor: 3 }, abilities: ['slam', 'spark_burn', 'warcry', 'spines'], xp: 60, gold: 90 },
 
   // Act II — the Hollow Forge
   rust_golem: { name: 'Rust Golem', act: 2, glyph: '🤖', stats: { maxHp: 95, atk: 7, atkSpeed: 0.7, armor: 4 }, xp: 14, gold: 16 },
@@ -133,7 +133,7 @@ export const ENEMIES = {
   hollow_deacon: { name: 'Hollow Deacon', act: 2, glyph: '🕸️', stats: { maxHp: 70, atk: 6, atkSpeed: 1.0 }, abilities: ['curse_wail', 'chime'], xp: 15, gold: 17 },
   slag_brute: { name: 'Slag Brute', act: 2, glyph: '🦣', elite: true, stats: { maxHp: 170, atk: 9, atkSpeed: 0.8, armor: 5 }, abilities: ['slam'], xp: 34, gold: 45 },
   chain_warden: { name: 'Chain Warden', act: 2, glyph: '⛓️', elite: true, stats: { maxHp: 155, atk: 8, atkSpeed: 1.0, armor: 4 }, abilities: ['shieldup', 'slam'], xp: 34, gold: 45 },
-  hollow_smith: { name: 'The Hollow Smith', act: 2, glyph: '🔨', boss: true, stats: { maxHp: 520, atk: 10, atkSpeed: 0.85, armor: 5 }, abilities: ['slam', 'warcry', 'mending'], xp: 90, gold: 150 },
+  hollow_smith: { name: 'The Hollow Smith', act: 2, glyph: '🔨', boss: true, stats: { maxHp: 520, atk: 10, atkSpeed: 0.85, armor: 5 }, abilities: ['heavy_bite', 'shieldup', 'warcry', 'mending'], xp: 90, gold: 150 },
 
   // Act III — the Pale Choir
   pale_acolyte: { name: 'Pale Acolyte', act: 3, glyph: '🕯️', stats: { maxHp: 110, atk: 9, atkSpeed: 1.0 }, abilities: ['hexing'], xp: 22, gold: 24 },
