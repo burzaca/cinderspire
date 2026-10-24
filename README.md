@@ -48,7 +48,7 @@ Built in ~10 hours of autonomous overnight development (2026-10-24/25). Zero dep
 
 | class | avg floor | act 1 clears | act 3 clears |
 |---|---|---|---|
-| Emberwright | 11.6 | 67% | 0% |
+| Emberwright | 12.2 | 70% | 0% |
 | Ironsoul | 12.1 | 60% | 0% |
 | Gravetongue | 12.1 | 65% | 2% (deepest observed: floor 60) |
 
@@ -56,11 +56,11 @@ Built in ~10 hours of autonomous overnight development (2026-10-24/25). Zero dep
 
 | class | avg floor | act 1 clears | act 3 clears |
 |---|---|---|---|
-| Emberwright | 15.2 | 98% | 0% |
+| Emberwright | 16.1 | 100% | 0% |
 | Ironsoul | 25.6 | 100% | 15% |
 | Gravetongue | 32.7 | 98% | 45% (deepest observed: floor 61) |
 
-That delta *is* the design: the Forge converts act-1 losses into act-3 clears. The autopilot is a mediocre player — humans do better. Known imbalance: Emberwright scales worst past act 2 (its burn engine falls off against high-HP bosses) — a deliberate future tuning lever. Tuning is done by changing data and re-running the sim, never by feel.
+That delta *is* the design: the Forge converts act-1 losses into act-3 clears. The autopilot is a mediocre player — humans do better. Class identity is intentional: Emberwright is the strongest early climber and the weakest endurer (burst/AoE, no sustain — it falls off against high-HP act-3 bosses); Gravetongue is the opposite. The autopilot's heal-when-hurt policy under-plays burst classes, so treat the late-game gap as a ceiling, not a floor. Tuning is done by changing data and re-running the sim, never by feel.
 
 ## Run it
 
