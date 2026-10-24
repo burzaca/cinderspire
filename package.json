@@ -1,0 +1,12 @@
+{
+  "name": "cinderspire",
+  "version": "1.0.0",
+  "description": "CINDERSPIRE — an incremental roguelike: climb a burning tower in real-time auto-battler combat, die, and let the Forge earn embers while you sleep.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "test": "node --test tests/",
+    "sim": "node scripts/simulate.js"
+  },
+  "license": "MIT"
+}
