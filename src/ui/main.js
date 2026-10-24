@@ -493,7 +493,9 @@ function floatAt(anchor, text, cls) {
 function shake() {
   const pp = document.querySelector('.player-panel');
   if (pp) { pp.classList.remove('shake'); void pp.offsetWidth; pp.classList.add('shake'); }
+  if (navigator.vibrate) navigator.vibrate(12);
 }
+function haptic(pattern) { if (navigator.vibrate) navigator.vibrate(pattern); }
 function updateCombatDOM() {
   const c = S.combat, ui = S.combatUI;
   ui.enemyUI.forEach((u, i) => {
@@ -562,6 +564,7 @@ function onCombatEnd() {
   setTimeout(() => {
     if (c.win) {
       beep('win');
+      haptic([25, 40, 25]);
       const { gold, xp, spoils } = applyVictory(S.run, c, metaBonuses(S.meta));
       S.lastSpoils = spoils;
       toast(`Victory — +${gold} gold, +${xp} xp`, 1800);
@@ -757,6 +760,7 @@ function renderRest() {
 /* ---------------- death ---------------- */
 function endRun(died) {
   cancelAnimationFrame(S.raf);
+  if (died) haptic([80, 60, 120]);
   const summary = runSummary(S.run);
   const bonuses = metaBonuses(S.meta);
   const result = applyRunResult(S.meta, summary, bonuses);
