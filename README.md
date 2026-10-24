@@ -46,7 +46,7 @@ Built in ~10 hours of autonomous overnight development (2026-10-24/25). Zero dep
 
 | class | avg floor | act 1 clears |
 |---|---|---|
-| Emberwright | 8.0 | 13% |
+| Emberwright | 10.6 | 52% |
 | Ironsoul | 11.1 | 53% |
 | Gravetongue | 11.7 | 57% (deepest observed: floor 61) |
 
@@ -87,7 +87,6 @@ The engine is UI-free and deterministic: the browser, the tests and the balance 
 
 ## Known rough edges (honest list)
 
-- Emberwright underperforms vs the other two under the autopilot (13% vs ~55% act-1) — a human playing its burn scaling does much better, but it wants another tuning pass.
 - No music, only a tiny synth. Sound is off by default.
 - The Pale Choir (act 3) is a wall past ~floor 24 with a fresh Forge — by design it's the "many Reforges later" goal, but it could use more mid-run power spikes.
 - No cloud saves; progress lives in your browser's localStorage.

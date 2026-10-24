@@ -5,7 +5,7 @@ export const CLASSES = {
   emberwright: {
     name: 'Emberwright', glyph: '🔥', tag: 'Burn them bright.',
     desc: 'Firecaller. Weak to face, strong over time — burns stack and amplify.',
-    stats: { maxHp: 75, atk: 10, atkSpeed: 1.15, armor: 0, manaRegen: 13, crit: 0.05 },
+    stats: { maxHp: 85, atk: 10, atkSpeed: 1.15, armor: 0, manaRegen: 13, crit: 0.05 },
     start: ['cinder_lance', 'ember_wave', 'kindling'],
     unlockCost: 0,
   },
@@ -28,10 +28,10 @@ export const CLASSES = {
 // power = damage as multiple of attack. Costs are mana; cooldowns seconds.
 export const ABILITIES = {
   // ---- Emberwright ----
-  cinder_lance: { name: 'Cinder Lance', cls: 'emberwright', cost: 15, cooldown: 0, power: 1.8, rarity: 'common', icon: '🔺', flavor: 'A spear of cooled slag.' },
-  ember_wave: { name: 'Ember Wave', cls: 'emberwright', cost: 30, cooldown: 4, power: 1.1, aoe: true, burn: 4, rarity: 'common', icon: '🌊', flavor: 'Heat does not knock.' },
+  cinder_lance: { name: 'Cinder Lance', cls: 'emberwright', cost: 15, cooldown: 0, power: 2.0, rarity: 'common', icon: '🔺', flavor: 'A spear of cooled slag.' },
+  ember_wave: { name: 'Ember Wave', cls: 'emberwright', cost: 25, cooldown: 4, power: 1.1, aoe: true, burn: 4, rarity: 'common', icon: '🌊', flavor: 'Heat does not knock.' },
   wildfire: { name: 'Wildfire', cls: 'emberwright', cost: 25, cooldown: 6, burn: 9, selfDamage: 6, rarity: 'uncommon', icon: '🔥', flavor: 'Fire eats whoever feeds it.' },
-  kindling: { name: 'Kindling', cls: 'emberwright', cost: 25, cooldown: 12, burnAmp: 0.5, buff: 1, rarity: 'uncommon', icon: '🪵', flavor: 'Everything burns better.' },
+  kindling: { name: 'Kindling', cls: 'emberwright', cost: 20, cooldown: 10, burnAmp: 0.6, buff: 1, rarity: 'uncommon', icon: '🪵', flavor: 'Everything burns better.' },
   sear: { name: 'Sear', cls: 'emberwright', cost: 20, cooldown: 8, slow: 2, weaken: 1, rarity: 'uncommon', icon: '♨️', flavor: 'Soft knees, soft steel.' },
   ash_shield: { name: 'Ash Shield', cls: 'emberwright', cost: 20, cooldown: 8, shield: 22, rarity: 'uncommon', icon: '🌫️', flavor: 'Smoke you can hide behind.' },
   cinder_rain: { name: 'Cinder Rain', cls: 'emberwright', cost: 40, cooldown: 10, power: 0.9, aoe: true, burn: 4, rarity: 'rare', icon: '🌠', flavor: 'The sky owes you nothing.' },

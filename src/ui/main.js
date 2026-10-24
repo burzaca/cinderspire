@@ -401,6 +401,9 @@ function renderCombat(kind) {
   renderPotionBar(potionWrap, (idx) => usePotion(idx, c));
 
   S.combatUI = { enemyUI, abilityUI, php, pmana, potionWrap, kind };
+  if (S.meta.stats.runs === 0 && kind === 'combat') {
+    toast('You auto-attack. Your job: tap abilities for burst. 1×/2×/3× speed and 🤖 autopilot below.', 4000);
+  }
   S.paused = false; S.auto = false; S.acc = 0; S.lastT = performance.now();
   S.raf = requestAnimationFrame(combatLoop);
 }
@@ -544,7 +547,12 @@ function onCombatEnd() {
       const { gold, xp, spoils } = applyVictory(S.run, c, metaBonuses(S.meta));
       S.lastSpoils = spoils;
       toast(`Victory — +${gold} gold, +${xp} xp`, 1800);
-      if (S.combatUI.kind === 'boss') toast(`Act cleared! The tower keeps building…`, 2400);
+      if (S.combatUI.kind === 'boss') {
+        toast('Act cleared! Choose a trophy relic.', 2400);
+        const owned = new Set(S.run.relics);
+        const pool = S.run.rng.shuffle(Object.keys(RELICS).filter((r) => !owned.has(r)));
+        S.lastSpoils = pool.slice(0, 3).map((id) => ({ kind: 'relic', id }));
+      }
       saveRun();
       if (S.run.pendingBoons && S.run.pendingBoons.length) renderLevelUp();
       else renderSpoils();
