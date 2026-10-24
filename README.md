@@ -28,6 +28,8 @@ Built in ~10 hours of autonomous overnight development (2026-10-24/25). Zero dep
 - **Endless scaling.** Three acts — the Smoldering Stairs, the Hollow Forge, the Pale Choir — then the tower loops, harder, forever.
 - **The Forge never sleeps.** Idle ember income scales with your best floor. Reforge for Cinders. Numbers go up while you sleep.
 - **Deterministic.** Every run is seeded; Daily runs give the whole world the same tower.
+  Died somewhere nasty? The death screen copies a `?seed=…` link — send it to a friend and they
+  climb the exact same tower.
 
 ## Contents
 

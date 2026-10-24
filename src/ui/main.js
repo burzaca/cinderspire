@@ -21,7 +21,7 @@ const hudEl = $('#hud');
 const S = {
   meta: null, run: null, combat: null, combatUI: null,
   screen: 'title', speed: 1, paused: false, auto: false,
-  raf: 0, acc: 0, lastT: 0, pendingIdle: null,
+  raf: 0, acc: 0, lastT: 0, pendingIdle: null, sharedSeed: null,
 };
 
 /* ---------------- persistence ---------------- */
@@ -188,6 +188,12 @@ function renderTitle() {
   const bHelp = el('button', 'btn ghost', 'How to play');
   bHelp.onclick = helpModal;
   btns.append(bStart, bDaily, bForge, bHelp);
+  if (S.sharedSeed != null) {
+    const seed = S.sharedSeed;
+    const bShared = el('button', 'btn primary', `🔗 Shared tower <small>seed ${seed} — someone dared you</small>`);
+    bShared.onclick = () => { S.sharedSeed = null; renderClasses(seed); };
+    btns.prepend(bShared);
+  }
   screenEl.appendChild(btns);
   if (S.pendingIdle) {
     modal('While you were away…', [
@@ -784,7 +790,13 @@ function endRun(died) {
   if (summary.seed != null) {
     const bReplay = el('button', 'btn ghost', `↻ Retry this seed`);
     bReplay.onclick = () => beginRun(summary.cls, summary.seed);
-    btns.append(bReplay);
+    const bShare = el('button', 'btn ghost', '🔗 Copy tower link');
+    bShare.onclick = async () => {
+      const url = `${location.origin}${location.pathname}?seed=${summary.seed}`;
+      try { await navigator.clipboard.writeText(url); toast('Tower link copied — send it to a friend.'); }
+      catch { prompt('Copy this link:', url); }
+    };
+    btns.append(bReplay, bShare);
   }
   screenEl.appendChild(btns);
 }
@@ -906,6 +918,8 @@ function boot() {
   document.addEventListener('visibilitychange', () => { if (document.hidden) saveRun(); });
 
   const savedRun = loadJSON('run');
+  const urlSeed = new URLSearchParams(location.search).get('seed');
+  if (urlSeed != null && Number.isFinite(Number(urlSeed))) S.sharedSeed = Number(urlSeed);
   if (savedRun) {
     S.run = deserializeRun(savedRun);
     if (savedRun.combat) {
